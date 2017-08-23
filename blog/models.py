@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -30,7 +31,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     """
-    文章的数据库表稍微复杂一点，主要是涉及的字段更多。
+    文章数据表
     """
     # 文章标题
     title = models.CharField(max_length=70)
@@ -65,3 +66,7 @@ class Post(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    # 自定义 get_absolute_url 方法
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.pk})
